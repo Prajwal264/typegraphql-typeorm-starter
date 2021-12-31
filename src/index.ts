@@ -1,140 +1,22 @@
-import 'reflect-metadata';
-import express, { Application } from 'express';
-import { ApolloServer } from 'apollo-server-express';
-import { buildSchema } from 'type-graphql';
-import { ApolloServerPluginLandingPageGraphQLPlayground } from 'apollo-server-core';
-import { createConnection } from 'typeorm';
-import Container from 'typedi';
+#!/usr/bin/env node
+import program from 'commander';
 
-/**
- *
- *
- * @class Server
- */
-class Server {
-  /**
-   *
-   *
-   * @private
-   * @type {(string | number)}
-   * @memberof Server
-   */
-  private port: string | number;
+import { CreateCommand } from './commands/create';
 
-  /**
-   *
-   *
-   * @private
-   * @type {Application}
-   * @memberof Server
-   */
-  private app: Application;
+program
+    .name('typegraphql-typeorm-starter')
+    .version('1.0.2');
 
-  /**
-   *
-   *
-   * @private
-   * @type {ApolloServer}
-   * @memberof Server
-   */
-  private graphQLServer: ApolloServer;
-
-  /**
-   *
-   *
-   * @memberof Server
-   */
-  public async init() {
-    this.confgure();
-    await this.setup();
-    this.listen();
-  }
-
-  /**
-   *
-   *
-   * @private
-   * @memberof Server
-   */
-  private confgure() {
-    this.configurePort();
-    createConnection();
-  }
-
-  /**
-   *
-   *
-   * @private
-   * @memberof Server
-   */
-  private configurePort() {
-    this.port = process.env.PORT || 4000;
-  }
-
-  /**
-   *
-   *
-   * @private
-   * @memberof Server
-   */
-  private async setup() {
-    this.createExpressApplication();
-    await this.createGraphQLServer();
-  }
-
-  /**
-   *
-   *
-   * @private
-   * @memberof Server
-   */
-  private createExpressApplication() {
-    this.app = express();
-  }
-
-  /**
-   *
-   *
-   * @private
-   * @memberof Server
-   */
-  private async createGraphQLServer() {
-    const schema = await buildSchema({
-      resolvers: [`${__dirname}/**/*.resolver.{ts,js}`],
-      container: Container,
-      emitSchemaFile: './src/generated/schema.gql',
-    });
-    this.graphQLServer = new ApolloServer({
-      schema,
-      plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
+program
+    .command('new <name>')
+    .description('Creates a new typegraphql-typeorm starter package')
+    .action((name: string) => {
+        const command = new CreateCommand();
+        command.execute(name);
     });
 
-    await this.graphQLServer.start();
-
-    this.graphQLServer.applyMiddleware({ app: this.app });
-  }
-
-  /**
-   *
-   *
-   * @private
-   * @memberof Server
-   */
-  private listen() {
-    const { port } = this;
-    this.app.listen(port, () => {
-      console.log(`Server is running at ${port}`);
-    });
-  }
+if (!process.argv.slice(2).length) {
+    program.outputHelp();
 }
 
-/**
- *
- *
- */
-const bootstrap = async () => {
-  const server = new Server();
-  server.init();
-};
-
-bootstrap();
+program.parse(process.argv);
