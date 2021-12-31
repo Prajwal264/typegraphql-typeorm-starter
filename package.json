@@ -6,7 +6,6 @@
   "repository": "git@github.com:Prajwal264/typegraphql-typeorm-starter.git",
   "author": "",
   "license": "MIT",
-  "private": true,
   "scripts": {
     "start": "npm run dev",
     "dev": "nodemon dist",
