@@ -10,8 +10,17 @@ Starter template for bootstrapping a TypeGraphQL + Apollo Server GraphQL API + T
 
 Install `typegraphql-typeorm-starter` with npm
 
-    1. npm i typegraphql-typeorm-starter
-    2. cd typegraphql-typeorm-starter
+    1. npm i -g typegraphql-typeorm-starter
+    2. typegraphql-typeorm-starter new `projectname`
+    3. cd `projectname`
+    4. npm install // in project root directory
+    5. npm run watch // to start typescript watcher
+    6. npm start // to start the server
+
+Install `typegraphql-typeorm-starter` with npx
+
+    1. npx typegraphql-typeorm-starter new `projectname`
+    2. cd `projectname`
     3. npm install // in project root directory
     4. npm run watch // to start typescript watcher
     5. npm start // to start the server
@@ -20,29 +29,8 @@ Install `typegraphql-typeorm-starter` with npm
    This stater uses typeORM to setup the configuration + connect to the database.
 
    ### Connecting to a database
-   1. create a file called `ormconfig.json`.
-   2. Dump this 
-   ```js 
-   {
-      "type": "postgres",
-      "host": "localhost",
-      "port": 5432,
-      "username": "admin",
-      "password": "",
-      "database": "databasename",
-      "synchronize": true,
-      "logging": false,
-      "entities": [
-        "dist/entities/**/*.js"
-      ],
-      "migrations": [
-        "dist/migrations/**/*.js"
-      ],
-      "subscribers": [
-        "dist/subscriber/**/*.js"
-      ]
-    } 
-  ```
+   1. Create a database 
+   2. update the config in ormconfig.json
     
 ## License
 

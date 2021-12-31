@@ -31,7 +31,9 @@ export class CreateCommand {
                 console.clear();
                 console.log(`Congratulations, your project has been created at folder ${chalk.cyanBright.bold(name)}`);
                 console.log("\n");
-                console.log(`You can run ${chalk.cyanBright.bold('yarn watch')} on the newly created project to actively watch and serve it on ${chalk.cyanBright.bold('localhost:8083')}`);
+                console.log(`You  ${chalk.cyanBright.bold(`cd ./${name}`)} `);
+                console.log(`Then run ${chalk.cyanBright.bold('yarn watch')} to start your typescript `);
+                console.log(`Then run ${chalk.cyanBright.bold('yarn start')} actively serve it on ${chalk.cyanBright.bold('localhost:4000')} `);
             } else {
                 console.log(`Error initializing project`);
                 console.log(code);
