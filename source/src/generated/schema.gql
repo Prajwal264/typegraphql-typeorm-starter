@@ -41,7 +41,11 @@ type User implements EntityWrapper {
   username: String!
 }
 
-type UserResponse {
-  data: User
-  errors: [Error!]
+type UserResponse implements EntityWrapper {
+  createdAt: DateTime!
+  email: String!
+  id: ID!
+  profileImage: String
+  updatedAt: DateTime!
+  username: String!
 }
