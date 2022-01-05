@@ -1,2 +1,4 @@
 node_modules
 lib
+source/dist
+source/node_modules
